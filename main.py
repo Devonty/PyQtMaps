@@ -36,6 +36,8 @@ class MyMaps(QtWidgets.QMainWindow, Ui_MainWindow):
         ]
         self.spn_lon = self.spn_list[self.cur]
         self.spn_lat = self.spn_list[self.cur]
+        self.lon_delta = 0.001
+        self.lat_delta = 0.001
         # Стартовый Запрос
         self.beg_searh = 'Липецк Быханов Сад'
         self.update_on_search(self.beg_searh)
@@ -117,9 +119,14 @@ class MyMaps(QtWidgets.QMainWindow, Ui_MainWindow):
             self.cur = min(len(self.spn_list) - 1, self.cur + 1)
             self.spn_lon = self.spn_list[self.cur]
             self.spn_lat = self.spn_list[self.cur]
-        else:
-            event.accept()
-            return
+        elif event.key() == QtCore.Qt.Key_Down:
+            self.lat -= self.lat_delta
+        elif event.key() == QtCore.Qt.Key_Up:
+            self.lat += self.lat_delta
+        elif event.key() == QtCore.Qt.Key_Left:
+            self.lon -= self.lon_delta
+        elif event.key() == QtCore.Qt.Key_Right:
+            self.lon += self.lon_delta
         event.accept()
         self.set_image()
 
